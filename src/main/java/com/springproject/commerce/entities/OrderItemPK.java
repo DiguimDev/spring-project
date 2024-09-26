@@ -7,7 +7,7 @@ import jakarta.persistence.ManyToOne;
 @Embeddable
 public class OrderItemPK {
     @ManyToOne
-    @JoinColumn(name = "ordem_id")
+    @JoinColumn(name = "order_id")
     private Order order;
 
     @ManyToOne
