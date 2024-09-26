@@ -3,6 +3,9 @@ package com.springproject.commerce.entities;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "tb_order")
 public class Order {
@@ -19,6 +22,8 @@ public class Order {
 
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL) // cascade é peculiaridade da JPA
     private Payment payment;
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> items = new HashSet<>();
 
     public Order(){
     }
