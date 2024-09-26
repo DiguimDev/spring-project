@@ -13,6 +13,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
+    @Column(unique = true) // faz com que no mapeamento nao se repita vai ser unico
     private String email;
     private String phone;
     private LocalDate birthdate;
