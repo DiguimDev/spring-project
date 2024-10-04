@@ -5,11 +5,11 @@ import com.springproject.commerce.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -20,13 +20,23 @@ public class ProductController {
     private ProductService service;
 
     @GetMapping(value = "/{id}")
-    public ProductDto findById(@PathVariable Long id){
-        return service.findById(id);
+    public ResponseEntity<ProductDto> findById(@PathVariable Long id){
+        ProductDto dto = service.findById(id);
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping()
-    public Page<ProductDto> findAll(Pageable pageable){
-        return service.findAll(pageable);
+    public ResponseEntity<Page<ProductDto>> findAll(Pageable pageable){
+        Page<ProductDto> dto = service.findAll(pageable);
+        return ResponseEntity.ok(dto);
+    }
+
+    @PostMapping
+    public ResponseEntity<ProductDto> insert(@RequestBody ProductDto productDto){
+        productDto = service.insert(productDto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(productDto.getId()).toUri();
+        return ResponseEntity.created(uri).body(productDto);
     }
 }
 
