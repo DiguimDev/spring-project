@@ -9,55 +9,23 @@ public class ProductDto {
     private Double price;
     private String imgUrl;
 
+    public ProductDto(){
+    }
 
-    public static final class ProductDtoBuilder {
-        private Long id;
-        private String name;
-        private String description;
-        private Double price;
-        private String imgUrl;
+    public ProductDto(Long id, String name, String description, Double price, String imgUrl) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.imgUrl = imgUrl;
+    }
 
-        private ProductDtoBuilder() {
-        }
-
-        public static ProductDtoBuilder builder() {
-            return new ProductDtoBuilder();
-        }
-
-        public ProductDtoBuilder id(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public ProductDtoBuilder name(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public ProductDtoBuilder description(String description) {
-            this.description = description;
-            return this;
-        }
-
-        public ProductDtoBuilder price(Double price) {
-            this.price = price;
-            return this;
-        }
-
-        public ProductDtoBuilder imgUrl(String imgUrl) {
-            this.imgUrl = imgUrl;
-            return this;
-        }
-
-        public ProductDto build() {
-            ProductDto productDto = new ProductDto();
-            productDto.price = this.price;
-            productDto.description = this.description;
-            productDto.id = this.id;
-            productDto.name = this.name;
-            productDto.imgUrl = this.imgUrl;
-            return productDto;
-        }
+    public ProductDto(Product product) {
+        this.id = product.getId();
+        this.name = product.getName();
+        this.description = product.getDescription();
+        this.price = product.getPrice();
+        this.imgUrl = product.getImgUrl();
     }
 
     public Long getId() {
