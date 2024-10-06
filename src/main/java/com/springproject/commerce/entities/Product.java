@@ -16,6 +16,7 @@ public class Product {
     private String name;
     @Column(columnDefinition = "TEXT") // define no mapeamento pro banco que a coluna é um TEXT
     private String description;
+
     private Double price;
     private String imgUrl;
     @ManyToMany

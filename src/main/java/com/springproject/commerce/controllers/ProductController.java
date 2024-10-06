@@ -2,6 +2,7 @@ package com.springproject.commerce.controllers;
 
 import com.springproject.commerce.dto.ProductDto;
 import com.springproject.commerce.services.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,8 +16,11 @@ import java.net.URI;
 @RequestMapping(value = "/products")
 public class ProductController {
 
-    @Autowired
-    private ProductService service;
+    private final ProductService service;
+
+    public ProductController(ProductService service){
+        this.service = service;
+    }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<ProductDto> findById(@PathVariable Long id){
@@ -31,7 +35,7 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductDto> insert(@RequestBody ProductDto productDto){
+    public ResponseEntity<ProductDto> insert(@Valid @RequestBody ProductDto productDto){
         productDto = service.insert(productDto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(productDto.getId()).toUri();
@@ -39,7 +43,7 @@ public class ProductController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ProductDto> update(@PathVariable Long id, @RequestBody ProductDto productDto){
+    public ResponseEntity<ProductDto> update(@PathVariable Long id,@Valid @RequestBody ProductDto productDto){
         productDto = service.update(id, productDto);
         return ResponseEntity.ok(productDto);
     }
