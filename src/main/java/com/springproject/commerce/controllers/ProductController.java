@@ -3,7 +3,6 @@ package com.springproject.commerce.controllers;
 import com.springproject.commerce.dto.ProductDto;
 import com.springproject.commerce.services.ProductService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +28,8 @@ public class ProductController {
     }
 
     @GetMapping()
-    public ResponseEntity<Page<ProductDto>> findAll(Pageable pageable){
-        Page<ProductDto> dto = service.findAll(pageable);
+    public ResponseEntity<Page<ProductDto>> findAll(@RequestParam(name = "name", defaultValue = "") String name,Pageable pageable){
+        Page<ProductDto> dto = service.findAll(name, pageable);
         return ResponseEntity.ok(dto);
     }
 

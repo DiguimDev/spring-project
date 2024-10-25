@@ -6,16 +6,12 @@ import com.springproject.commerce.repositories.ProductRepository;
 import com.springproject.commerce.services.exceptions.DataBaseException;
 import com.springproject.commerce.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -34,8 +30,8 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ProductDto> findAll(Pageable pageable) {
-        Page<Product> result = productRepository.findAll(pageable);
+    public Page<ProductDto> findAll(String name,Pageable pageable) {
+        Page<Product> result = productRepository.searchByName(name,pageable);
         return result.map(ProductDto::new);
     }
 
